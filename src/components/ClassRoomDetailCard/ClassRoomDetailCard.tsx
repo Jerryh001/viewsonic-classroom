@@ -13,8 +13,10 @@ import {
 import { ArrowBackIosNew, Close } from "@mui/icons-material";
 import { QRCodeSVG } from "qrcode.react";
 import { CopyButton } from "../shared/CopyButton";
+import { classRoomApi } from "../../redux/api";
 
 export const ClassRoomDetailCard: React.FC = () => {
+    const { data: classRoom } = classRoomApi.useGetClassRoomQuery("XH8E9647");
     return (
         <CardRoot>
             <CardHeader
@@ -36,10 +38,12 @@ export const ClassRoomDetailCard: React.FC = () => {
             />
             <CardContent>
                 <Stack spacing={2}>
-                    <CardText gutterBottom>Join 302 Science</CardText>
+                    <CardText gutterBottom>{`Join ${
+                        classRoom?.name ?? ""
+                    }`}</CardText>
                     <Stack direction="row" spacing={2}>
                         <Stack direction="row" alignItems="center" spacing={1}>
-                            <CardText>ID: XH8E9647</CardText>
+                            <CardText>{`ID: ${classRoom?.id ?? ""}`}</CardText>
                             <CopyButton />
                         </Stack>
                         <Stack direction="row" alignItems="center" spacing={1}>
