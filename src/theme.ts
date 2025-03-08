@@ -9,6 +9,13 @@ export const theme = createTheme({
         background: {
             paper: "#f6f6f6",
         },
+        success: {
+            main: "#78ca3b",
+            contrastText: "white",
+        },
+        error: {
+            main: "#ed486c",
+        },
     },
     components: {
         MuiButton: {
