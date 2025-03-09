@@ -1,6 +1,11 @@
+import { useCallback, useRef, useState } from "react";
 import {
     darken,
+    Divider,
     IconButton,
+    ListItemIcon,
+    Menu,
+    MenuItem,
     Stack,
     styled,
     Tab,
@@ -8,16 +13,26 @@ import {
     tabsClasses,
 } from "@mui/material";
 import { TabList, TabListProps } from "@mui/lab";
-import { MoreVert } from "@mui/icons-material";
+import {
+    Check,
+    MoreVert,
+    NoMeetingRoom,
+    RestartAlt,
+} from "@mui/icons-material";
 
-export interface ClassRoomTabListProps extends TabListProps {
-    onMenuOpen?(): void;
-}
+export type ClassRoomTabListProps = TabListProps;
 
-export const ClassRoomTabList: React.FC<ClassRoomTabListProps> = ({
-    onMenuOpen,
-    ...props
-}) => {
+export const ClassRoomTabList: React.FC<ClassRoomTabListProps> = (props) => {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuIconRef = useRef<React.ComponentRef<typeof IconButton>>(null);
+
+    const onClickMenuIcon = useCallback(() => {
+        setMenuOpen(true);
+    }, []);
+    const onCloseMenu = useCallback(() => {
+        setMenuOpen(false);
+    }, []);
+
     return (
         <Stack
             paddingLeft={2}
@@ -30,9 +45,36 @@ export const ClassRoomTabList: React.FC<ClassRoomTabListProps> = ({
                 <Tab label="Student List" value="STUDENT" />
                 <Tab label="Group" value="GROUP" />
             </TabListRoot>
-            <IconButton onClick={onMenuOpen}>
+            <IconButton ref={menuIconRef} onClick={onClickMenuIcon}>
                 <MoreVert />
             </IconButton>
+            <Menu
+                open={menuOpen}
+                anchorEl={menuIconRef.current}
+                onClose={onCloseMenu}
+                // click any item will not close the menu by default
+                onClick={onCloseMenu}
+            >
+                <MenuItem>
+                    <ListItemIcon>
+                        <Check fontSize="small" />
+                    </ListItemIcon>
+                    Check Attendance
+                </MenuItem>
+                <MenuItem>
+                    <ListItemIcon>
+                        <NoMeetingRoom fontSize="small" />
+                    </ListItemIcon>
+                    Dismiss Class
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                    <ListItemIcon>
+                        <RestartAlt fontSize="small" />
+                    </ListItemIcon>
+                    Reset All Scores
+                </MenuItem>
+            </Menu>
         </Stack>
     );
 };
