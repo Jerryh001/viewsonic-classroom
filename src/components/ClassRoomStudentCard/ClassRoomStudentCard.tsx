@@ -1,12 +1,15 @@
 import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Card, CardHeader, IconButton, Stack, styled } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Close } from "@mui/icons-material";
 import { ClassRoomTitle } from "./ClassRoomTitle";
 import { ClassRoomTabList, ClassRoomTabListProps } from "./ClassRoomTabList";
 import { StudentScoreTable } from "../StudentScoreTable";
+import { layoutSlice } from "../../redux/slices";
 
 export const ClassRoomStudentCard: React.FC = () => {
+    const dispatch = useDispatch();
     const [tab, setTab] = useState("STUDENT");
 
     const onTabChange = useCallback<
@@ -15,11 +18,15 @@ export const ClassRoomStudentCard: React.FC = () => {
         setTab(value);
     }, []);
 
+    const closeCard = useCallback(() => {
+        dispatch(layoutSlice.actions.closeStudentCard());
+    }, [dispatch]);
+
     return (
         <CardRoot>
             <CardHeader
                 action={
-                    <IconButton>
+                    <IconButton onClick={closeCard}>
                         <Close />
                     </IconButton>
                 }

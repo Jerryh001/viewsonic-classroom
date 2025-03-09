@@ -14,9 +14,18 @@ import { ArrowBackIosNew, Close } from "@mui/icons-material";
 import { QRCodeSVG } from "qrcode.react";
 import { CopyButton } from "../shared/CopyButton";
 import { classRoomApi } from "../../redux/api";
+import { useCallback } from "react";
+import { layoutSlice } from "../../redux/slices";
+import { useDispatch } from "react-redux";
 
 export const ClassRoomDetailCard: React.FC = () => {
+    const dispatch = useDispatch();
     const { data: classRoom } = classRoomApi.useGetClassRoomQuery("XH8E9647");
+
+    const closeCard = useCallback(() => {
+        dispatch(layoutSlice.actions.closeDetailCard());
+    }, [dispatch]);
+
     return (
         <CardRoot>
             <CardHeader
@@ -31,7 +40,7 @@ export const ClassRoomDetailCard: React.FC = () => {
                     </Button>
                 }
                 action={
-                    <IconButton>
+                    <IconButton onClick={closeCard}>
                         <Close />
                     </IconButton>
                 }
