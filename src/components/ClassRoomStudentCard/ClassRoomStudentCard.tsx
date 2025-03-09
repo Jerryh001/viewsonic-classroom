@@ -4,6 +4,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Close } from "@mui/icons-material";
 import { ClassRoomTitle } from "./ClassRoomTitle";
 import { ClassRoomTabList, ClassRoomTabListProps } from "./ClassRoomTabList";
+import { StudentScoreTable } from "../StudentScoreTable";
 
 export const ClassRoomStudentCard: React.FC = () => {
     const [tab, setTab] = useState("STUDENT");
@@ -23,12 +24,14 @@ export const ClassRoomStudentCard: React.FC = () => {
                     </IconButton>
                 }
             />
-            <Stack flex={1} spacing={3}>
+            <Stack flex={1} spacing={3} overflow="hidden">
                 <ClassRoomTitle />
-                <Stack flex={1}>
+                <Stack flex={1} overflow="hidden">
                     <TabContext value={tab}>
                         <ClassRoomTabList onChange={onTabChange} />
-                        <StyledTabPanel value="STUDENT">STUDENT</StyledTabPanel>
+                        <StyledTabPanel value="STUDENT">
+                            <StudentScoreTable />
+                        </StyledTabPanel>
                         <StyledTabPanel value="GROUP">GROUP</StyledTabPanel>
                     </TabContext>
                 </Stack>
@@ -49,5 +52,6 @@ const StyledTabPanel = styled(TabPanel)(
     background-color: ${theme.palette.background.default};
     border-radius: ${theme.shape.borderRadius}px;
     box-shadow: ${theme.shadows[10]};
+    overflow: auto
 `
 );
