@@ -6,6 +6,7 @@ import { Close } from "@mui/icons-material";
 import { ClassRoomTitle } from "./ClassRoomTitle";
 import { ClassRoomTabList, ClassRoomTabListProps } from "./ClassRoomTabList";
 import { StudentScoreTable } from "../StudentScoreTable";
+import { GroupScoreTable } from "../GroupScoreTable";
 import { layoutSlice } from "../../redux/slices";
 
 export const ClassRoomStudentCard: React.FC = () => {
@@ -39,7 +40,9 @@ export const ClassRoomStudentCard: React.FC = () => {
                         <StyledTabPanel value="STUDENT">
                             <StudentScoreTable />
                         </StyledTabPanel>
-                        <StyledTabPanel value="GROUP">GROUP</StyledTabPanel>
+                        <StyledTabPanel value="GROUP">
+                            <GroupScoreTable />
+                        </StyledTabPanel>
                     </TabContext>
                 </Stack>
             </Stack>

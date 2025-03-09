@@ -6,8 +6,9 @@ export interface ClassRoom {
 }
 
 export interface Student {
+    /** `0` for no group */
     groupId: number;
-    // `undefined` for empty seat
+    /** `undefined` for empty seat */
     student?: StudentResource;
     /** not implement according to the spec, always be 0 */
     score: number;

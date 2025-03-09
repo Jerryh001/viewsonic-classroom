@@ -46,19 +46,37 @@ function* classRoomStudentCreator(): Generator<
     void,
     void
 > {
-    for (const [index, name] of getNameList().entries()) {
+    const nameList = getNameList();
+    const groupCounter = Array.from(
+        { length: Math.ceil(nameList.length / 5) },
+        () => 0
+    );
+
+    function getGroupId() {
+        while (true) {
+            const index = Math.round(Math.random() * groupCounter.length);
+            if (groupCounter[index] < 5) {
+                groupCounter[index]++;
+                return index + 1;
+            }
+        }
+    }
+
+    for (const [index, name] of nameList.entries()) {
+        const isOccupied = Math.random() > 0.3;
+
+        const groupId = isOccupied ? getGroupId() : 0;
         yield {
-            groupId: 0,
+            groupId: groupId,
             seatNumber: index + 1,
             score: 0,
             // simulate some seats are empty
-            student:
-                Math.random() > 0.3
-                    ? {
-                          id: `stu-${index + 1}`,
-                          name: name,
-                      }
-                    : undefined,
+            student: isOccupied
+                ? {
+                      id: `stu-${index + 1}`,
+                      name: name,
+                  }
+                : undefined,
         };
     }
 }
